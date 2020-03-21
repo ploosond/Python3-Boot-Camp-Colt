@@ -1,5 +1,4 @@
 class User:
-
     active_users = 0
 
     @classmethod
@@ -24,6 +23,9 @@ class User:
     def full_name(self):
         return f"{self.first} {self.last}"
 
+    def initials(self):
+        return f"{self.first[0]}.{self.last[0]}"
+
     def likes(self, thing):
         return f"{self.first} likes {thing}"
 
@@ -34,16 +36,23 @@ class User:
         self.age += 1
         return f"Happy {self.age}th, {self.first}"
 
-# user1 = User("Joe", "Smith", 68)
-# user2 = User("Blanca", "Lopez", 41)
+class Moderator(User):
+    total_mods = 0
+    def __init__(self, first, last, age, community):
+        super().__init__(first, last, age)
+        self.community = community
+        Moderator.total_mods += 1
+    @classmethod
+    def display_active_mods(cls):
+        return f"There are currently {cls.total_mods} active moderators"
 
-# print(User.display_active_users())
-# user1 = User("Joe", "Smith", 68)
-# user2 = User("Blanca", "Lopez", 41)
-# print(User.display_active_users())
+    def remove_post(self):
+        return f"{self.full_name()} removed a post from the {self.community}"
+u1 = User("Tom", "Garcia", 35)
+u2 = User("Tom", "Garcia", 35)
+u3 = User("Tom", "Garcia", 35)
+jasmine = Moderator("Jasmine", "Oconer", 61, "Piano")
+jasmine2 = Moderator("Jasmine", "Oconer", 61, "Piano")
+print(User.display_active_users())
+print(Moderator.display_active_mods())
 
-
-tom = User.from_string("Tom,Jones,89")
-print(tom.first)
-print(tom.full_name())
-print(tom.birthday())
